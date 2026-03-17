@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+    public Transform Player;
+    public GameObject projectilePrefab;
     public GameObject buttons;
+
     private float speed = 20f;
     private float xRange = 20f;
-    public GameObject projectilePrefab;
     private float Moveside;
 
 
     // Start is called before the first frame update
     private void Awake() {
-        
     }
     void Start()
     {
@@ -50,5 +52,21 @@ public class PlayerController : MonoBehaviour
         if (context.performed) {
         Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
         }
+    }
+
+    public void GhostEvent(InputAction.CallbackContext context)
+    {
+        StartCoroutine(ghostTime());
+    }
+
+    IEnumerator ghostTime ()
+    {  
+        GetComponentInChildren<Renderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+
+        yield return new WaitForSeconds(2f);
+
+        GetComponentInChildren<Renderer>().enabled = true;
+        GetComponent<Collider>().enabled = true;
     }
 }
