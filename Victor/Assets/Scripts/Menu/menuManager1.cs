@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class menuManager : MonoBehaviour
+public class menuManager1 : MonoBehaviour
 {
     public GameObject telaSair;
     public GameObject telaOpcoes;
