@@ -1,10 +1,27 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
-public class menuManager1 : MonoBehaviour
+public class menuManagerGame : MonoBehaviour
 {
+    [HideInInspector] public int vidas = 1;
     public GameObject telaSair;
     public GameObject telaOpcoes;
+
+    public TextMeshProUGUI textoVidas;
+
+    void Start()
+    {
+        if (textoVidas == null)
+        {
+            textoVidas = GameObject.Find("vidas").GetComponent<TextMeshProUGUI>();
+        }
+    }
+    void Update()
+    {
+        textoVidas.text = "Vidas: " + vidas;
+    }
+
     public void jogar()
     {
         SceneManager.LoadScene("Game");

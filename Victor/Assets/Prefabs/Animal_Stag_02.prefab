@@ -382,6 +382,7 @@ GameObject:
   - component: {fileID: 1894113442}
   - component: {fileID: 3170250280186918767}
   - component: {fileID: 1020302303655541966}
+  - component: {fileID: 2499446758778527200}
   m_Layer: 0
   m_Name: Animal_Stag_02
   m_TagString: Untagged
@@ -509,6 +510,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2499446758778527200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5792771941504673540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1762358acf4b14a9acd1856da7f5e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DetectCollisions
+  text: {fileID: 0}
 --- !u!1 &5792771941504692872
 GameObject:
   m_ObjectHideFlags: 0

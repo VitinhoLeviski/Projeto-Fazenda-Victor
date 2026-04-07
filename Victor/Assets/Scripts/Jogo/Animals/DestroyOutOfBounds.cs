@@ -7,6 +7,7 @@ using UnityEditor;
 
 public class DestroyOutOfBounds : MonoBehaviour
 {
+    private menuManagerGame menu;
     private float topBound = 30f;
     private float lowerBound = -10f;
     // Start is called before the first frame update
@@ -25,18 +26,7 @@ public class DestroyOutOfBounds : MonoBehaviour
         if (transform.position.z < lowerBound)
         {
             Destroy(gameObject);
-            Exit();
+            menu.vidas--;
         }
-    }
-
-    public void Exit()
-    {
-        Debug.Log("Game Over!");
-        /*
-#if UNITY_EDITOR
-        EditorApplication.ExitPlaymode();
-#else
-        Application.Quit(); // original code to quit Unity player
-#endif*/
     }
 }
