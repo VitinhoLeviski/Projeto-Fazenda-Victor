@@ -6,33 +6,33 @@ using TMPro;
 
 public class DetectCollisions : MonoBehaviour
 {
-    private menuManagerGame menu;
+    public LifendPoints player;
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = FindFirstObjectByType<LifendPoints>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
     }    
 
     private void OnTriggerEnter(Collider other)
     {
-
-       Destroy(gameObject);
-
-
         if(other.CompareTag("Player"))
         {
-            menu.vidas--;
+            player.takeDamage();
         }
         
         if(other.CompareTag("killer"))
         {
-
             Destroy(other.gameObject);
+            player.plusPoints();
         }
+        
+        Destroy(gameObject);
+
     }
 }

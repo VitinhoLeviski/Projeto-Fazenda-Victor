@@ -7,13 +7,14 @@ using UnityEditor;
 
 public class DestroyOutOfBounds : MonoBehaviour
 {
-    private menuManagerGame menu;
+    LifendPoints player;
     private float topBound = 30f;
-    private float lowerBound = -10f;
+    private float lowerBound = -14f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = FindFirstObjectByType<LifendPoints>();
+
     }
 
     // Update is called once per frame
@@ -24,9 +25,9 @@ public class DestroyOutOfBounds : MonoBehaviour
             Destroy(gameObject);
         }
         if (transform.position.z < lowerBound)
-        {
+        {            
+            player.takeDamage();
             Destroy(gameObject);
-            menu.vidas--;
         }
     }
 }

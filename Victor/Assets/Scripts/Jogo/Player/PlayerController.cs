@@ -7,38 +7,38 @@ public class PlayerController : MonoBehaviour
 {
     menuManagerGame menu;
 
+    public GameObject projectilePrefab;
+    public GameObject buttons;
+
     //Inputsystem
     public InputActionAsset controlador;
     private InputAction moveAction;
     private InputAction fireAction;
     private InputAction ghostAction;
     private InputAction pauseAction;
-    private InputAction resumeAction;
 
 
-
-
-    public GameObject projectilePrefab;
-    public GameObject buttons;
-
+    [HideInInspector] public int vidas = 3;
     bool intervalo = false;
     private float speed = 20f;
-    private float xRange = 20f;
+    private float xRange = 18f;
 
     // Start is called before the first frame update
 
 
-    private void OnEnable()
+    public void OnEnable()
     {
         controlador.FindActionMap("Player").Enable();
     }
-    private void OnDisable()
+    public void OnDisable()
     {
         controlador.FindActionMap("Player").Disable();
     }
 
     private void Awake()
     {
+        menu = FindFirstObjectByType<menuManagerGame>();
+
         moveAction = controlador.FindAction("Move");
         fireAction = controlador.FindAction("Jump");
         ghostAction = controlador.FindAction("Ghost");
@@ -63,56 +63,22 @@ public class PlayerController : MonoBehaviour
 
         // movimenta o player para esquerda e direita a partir da entrada do usu�rio
         transform.Translate(Vector3.right * speed * Time.deltaTime * Moveside);
-        // mant�m o player dentro dos limites do jogo (eixo x)
+
+        // mantêm o player dentro dos limites do jogo (eixo x)
         if (transform.position.x < -xRange)
         {
-            transform.position = new Vector3(-xRange, transform.position.y, transform.position.y);
+            transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
         }
+
         if (transform.position.x > xRange)
         {
-            transform.position = new Vector3(xRange, transform.position.y, transform.position.y);
+            transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
-        
     }
 
     void move()
     {
         float Moveside = moveAction.ReadValue<Vector2>().x;
-    }
-    void ghost()
-    {
-        if (ghostAction.WasPressedThisFrame() && intervalo == false)
-        {
-            StartCoroutine(ghostTime());
-            intervalo = true;
-        }
-    }
-
-    void fire()
-    {
-        if (fireAction.WasPressedThisFrame())
-        {
-            Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
-
-        }
-    }
-
-    void stop()
-    {
-        if (pauseAction.WasPressedThisFrame())
-        {
-            Time.timeScale = 0f;
-            OnDisable();
-        }
-    }
-
-    void resume()
-    {
-        if(resumeAction.WasPressedThisFrame())
-        {
-            Time.timeScale = 1f;
-            OnEnable();
-        }
     }
     IEnumerator ghostTime()
     {
@@ -125,5 +91,32 @@ public class PlayerController : MonoBehaviour
         GetComponent<Collider>().enabled = true;
         intervalo = false;
 
+    }
+    void ghost()
+    {
+        if (ghostAction.WasPressedThisFrame() && intervalo == false)
+        {
+            StartCoroutine(ghostTime());
+            intervalo = true;
+        }
+    }
+    void fire()
+    {
+        if (fireAction.WasPressedThisFrame())
+        {
+            Vector3 spawnPosition = transform.position + new Vector3(0, 0, 1);
+
+            Instantiate(projectilePrefab, spawnPosition, projectilePrefab.transform.rotation);
+        }
+    }
+    void stop()
+    {
+        if (pauseAction.WasPressedThisFrame())
+        {
+            Time.timeScale = 0f;
+            OnDisable();
+            
+            menu.opcoes();
+        }
     }
 }
